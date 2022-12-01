@@ -1,0 +1,25 @@
+# Container Logging Configuration
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "12m"
+    max-file: "8"
+
+services:
+
+  excalidraw-server:
+    image: node:16.14.2-alpine
+    hostname: excalidraw-server
+    volumes:
+      - ./:/app
+    ports:
+      - 3002:3002
+    working_dir: /app
+
+    command: yarn start
+    logging: *default-logging
+
+networks:
+  default:
+    name: excalidraw_default
+    # external: true
